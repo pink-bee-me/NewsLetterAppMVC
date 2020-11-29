@@ -26,8 +26,17 @@ namespace NewsLetterAppMVC.Controllers
                 return View("~/Views/Shared/Error.cshtml"); //tilde(~) means -> relative path or root
             }
             else
-            {
+            {// accessing database with Entity Framework "which is a wrapper for the ADO.NET Framework or ACTIVEX Data Object" both EF and ADO are libraries that deal with the exchanging and maneuvering of data.
+                using (NewsletterModelEntities db = new NewsletterModelEntities())
+                {
+                    var signUp = new SignUp();
+                    signUp.FirstName = firstName;
+                    signUp.LastName = lastName;
+                    signUp.EmailAddress = emailAddress;
 
+                    db.SignUps.Add(signUp);
+                    db.SaveChanges(); // nothing is saved until you write "db.SaveChanges();"
+                }
 
                 //        string queryString = @"INSERT INTO SignUps (FirstName, LastName, EmailAddress) VALUES (@FirstName, @LastName, @EmailAddress)";
 
