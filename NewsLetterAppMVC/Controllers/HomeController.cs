@@ -1,11 +1,4 @@
 ﻿using NewsLetterAppMVC.Models;
-using NewsLetterAppMVC.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace NewsLetterAppMVC.Controllers
@@ -26,9 +19,11 @@ namespace NewsLetterAppMVC.Controllers
                 return View("~/Views/Shared/Error.cshtml"); //tilde(~) means -> relative path or root
             }
             else
-            {// accessing database with Entity Framework "which is a wrapper for the ADO.NET Framework or ACTIVEX Data Object" both EF and ADO are libraries that deal with the exchanging and maneuvering of data.
+            {
+                // accessing database with Entity Framework "which is a wrapper for the ADO.NET Framework or ACTIVEX Data Object" both EF and ADO are libraries that deal with the exchanging and maneuvering of data.
+               
                 using (NewsletterModelEntities db = new NewsletterModelEntities())
-                {
+               {
                     var signUp = new SignUp();
                     signUp.FirstName = firstName;
                     signUp.LastName = lastName;
@@ -37,6 +32,7 @@ namespace NewsLetterAppMVC.Controllers
                     db.SignUps.Add(signUp);
                     db.SaveChanges(); // nothing is saved until you write "db.SaveChanges();"
                 }
+                return View("Success"); 
 
                 //        string queryString = @"INSERT INTO SignUps (FirstName, LastName, EmailAddress) VALUES (@FirstName, @LastName, @EmailAddress)";
 

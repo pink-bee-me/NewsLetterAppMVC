@@ -1,11 +1,7 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using NewsLetterAppMVC.ViewModels;
-using NewsLetterAppMVC;
 using NewsLetterAppMVC.Models;
 
 namespace NewsLetterAppMVC.Controllers
@@ -15,30 +11,33 @@ namespace NewsLetterAppMVC.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            return View();
-
-
-        }
-        public ActionResult Admin()
-        {
-           using (NewsletterModelEntities db = new NewsletterModelEntities())
+            using (NewsletterModelEntities db = new NewsletterModelEntities())
             {
-                var signUpVMs = new List<SignUpVM>();// made list called signUpVMs that is made up of items that are the type of  SignUpVM
+                var signUps = db.SignUps;              //this is info from the Context.cs file in the Entity Model Section(represents all the records in the database from the SignUps Table)
+                var signUpVMs = new List<SignUpVM>();  // made list called signUpVMs that is made up of items that are the type of  SignUpVM
 
                 foreach (var signUp in signUps)
                 {
                     var signUpVM = new SignUpVM();
 
-                    signUpVM.FirstName = signUp.FirstName; //this way you don't need (signUpVM.FirstName = signup.FirstName)
-                    signUpVM.LastName = signUp.LastName; //you can shorten it to (FirstName = signup.FirstName), etc...
+                    signUpVM.FirstName = signUp.FirstName;  //this way you don't need (signUpVM.FirstName = signup.FirstName)
+                    signUpVM.LastName = signUp.LastName;   //you can shorten it to (FirstName = signup.FirstName), etc...
                     signUpVM.EmailAddress = signUp.EmailAddress;
 
                     signUpVMs.Add(signUpVM);
                 }
 
                 return View(signUpVMs);
-            } 
-            
+            }
+
+            return View();
+
+        }
+    }
+}
+    
+        
+           
             //string queryString = @"SELECT Id, FirstName,LastName,EmailAddress from SignUps";
 
             ////create new List Called "signUps", which will be populated with items that are of type "NewsletterSignUp"
@@ -63,10 +62,6 @@ namespace NewsLetterAppMVC.Controllers
 
             //        signUps.Add(signUp);
             //    }
-            }
-
-         
-        }
-    }
-
+       
+   
 
